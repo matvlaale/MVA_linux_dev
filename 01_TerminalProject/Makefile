@@ -1,7 +1,8 @@
 all: shower
 
 shower:
-	gcc -Wall -O0 Shower.c -lncursesw -o Shower
+	gcc -Wall -O0 Shower.c -lncursesw -o Show
+	cp Show Shower
 
 clean:
-	rm -f *~ *.o Shower a.out
+	rm -f *~ *.o Show Shower a.out
