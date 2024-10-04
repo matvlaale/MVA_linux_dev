@@ -1,0 +1,2 @@
+.rwxrwxr-x 1,1k matvlaale  4 окт 20:12 -N  randomize.sh
+.rw-rw-r--  111 matvlaale  4 окт 20:13 -N  art.txt
