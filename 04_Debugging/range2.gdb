@@ -3,7 +3,6 @@ break range.c:22
 set $iters = 28
 set $itere = 35
 set $iter = $iters
-set $endi = 100 - 2
 ignore 1 27
 run -100 100 3 > /dev/null
 while $iter <= $itere
