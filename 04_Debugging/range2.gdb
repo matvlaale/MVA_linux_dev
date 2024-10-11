@@ -1,15 +1,11 @@
 file ./range
 break range.c:22
-run -100 100 3 > /dev/null
 set $iters = 28
 set $itere = 35
 set $iter = $iters
-set $count = 1
 set $endi = 100 - 2
-while $count < $iters
-  set $count = $count + 1
-  c
-end
+ignore 1 27
+run -100 100 3 > /dev/null
 while $iter <= $itere
   echo @@@
   print M
@@ -22,8 +18,6 @@ while $iter <= $itere
   set $iter = $iter + 1
   c
 end
-while i < $endi
-  c
-end
+ignore 1 34
 c
 quit
