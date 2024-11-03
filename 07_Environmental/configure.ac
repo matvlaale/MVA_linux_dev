@@ -16,7 +16,7 @@ LIBREADLINE=
 AS_IF([test "x$with_readline" != xno],
   [AC_CHECK_LIB([readline], [main],
     [AC_SUBST([LIBREADLINE], ["-lreadline"])
-     AC_DEFINE([HAVE_LIBREADLINE], [1],
+     AC_DEFINE([USE_RL], [1],
                [Define if you have libreadline])
     ],
     [if test "x$with_readline" != xcheck; then
@@ -25,7 +25,8 @@ AS_IF([test "x$with_readline" != xno],
      fi
     ], -lrhash)])
 
-AM_CONDITIONAL([USE_LIBREADLINE], LIBREADLINE)
+# AM_CONDITIONAL([USE_LIBREADLINE], LIBREADLINE)
+# AC_DEFINE([USE_RL], USE_READLINE, [libreadline])
 
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

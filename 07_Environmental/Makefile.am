@@ -2,7 +2,7 @@ bin_PROGRAMS = rhasher
 
 rhasher_SOURCES = rhasher.c
 
-rhasher_CFLAGS = @USE_RL@
+# rhasher_CPPFLAGS = use_rl=$(USE_RL)
 
 rhasher_LDADD = -lrhash
 

@@ -3,12 +3,10 @@
 #include <string.h>
 #include <rhash.h>
 
-// #define use_rl 0
+// #define USE_RL 0
 
-#ifdef use_rl
-#if use_rl == 1
+#if USE_RL == 1
 #include <readline/readline.h>
-#endif
 #endif
 
 #define base_alloc 128
@@ -38,24 +36,27 @@ void make_hash(char *algo, int retval, const char *msg) {
         type = 2;
     } else {
       printf("Unknown alogithm\n");
-      if (!use_rl)
+      #if USE_RL == 0
         printf("> ");
+      #endif
       return;
     }
     if (retval == 2) {
       res = rhash_msg(flags, msg, strlen(msg), digest);
       if (res < 0) {
         fprintf(stderr, "Some problem occured while making hash\n");
-        if (!use_rl)
+        #if USE_RL == 0
           printf("> ");
+        #endif
         return;
       }
     } else {
       res = rhash_file(flags, msg, digest);
       if (res < 0) {
         fprintf(stderr, "Some problem occured while making hash\n");
-        if (!use_rl)
+        #if USE_RL == 0
           printf("> ");
+        #endif
         return;
       }
     }
@@ -67,8 +68,9 @@ void make_hash(char *algo, int retval, const char *msg) {
                         (RHPR_BASE64 /*| RHPR_UPPERCASE*/));
      
     printf("%s\n", output);
-    if (!use_rl)
+    #if USE_RL == 0
       printf("> ");
+    #endif
 }
 
 int ssplit(char *source, size_t size, char **algo, char **src) { // returns type of src or -1
@@ -100,15 +102,17 @@ int ssplit(char *source, size_t size, char **algo, char **src) { // returns type
   if (!algend)
     return -1;
   if (aend != -1) {
-    if (!use_rl)
+    #if USE_RL == 0
       (*src)[aend - algend - 2] = '\0';
-    else
+    #else
       (*src)[aend - algend - 1] = '\0';
+    #endif
   } else {
-    if (!use_rl)
+    #if USE_RL == 0
       (*src)[size - algend - 2] = '\0';
-    else
+    #else
       (*src)[aend - algend - 1] = '\0';
+    #endif
   }
   // printf("%d : %d\n", aend, algend);
   return 1;
@@ -121,7 +125,7 @@ int main(/*int argc, char **argv*/) {
   const char *msg;
   size_t bsize = 1;
   rhash_library_init();
-  #if use_rl == 0
+  #if USE_RL == 0
     printf("> ");
     while(getline(&buffer, &bsize, stdin) != -1) {
       retval = ssplit(buffer, bsize, &algo, &src);
@@ -146,8 +150,8 @@ int main(/*int argc, char **argv*/) {
     }
   #else
     while((buffer = readline("> ")) != NULL) {
-      retval = ssplit(buffer, strlen(buffer), &algo, &src);
-      // printf("%lu: %s\n", bsize, buffer);
+      retval = ssplit(buffer, strlen(buffer) + 1, &algo, &src);
+      free(buffer);
       switch (retval) {
        case(-2):
         fprintf(stderr, "Too long algorithm name (>128)\n");
@@ -169,7 +173,9 @@ int main(/*int argc, char **argv*/) {
   #endif
   free(src);
   free(algo);
-  free(buffer);
+  #if USE_RL == 0
+    free(buffer);
+  #endif
   printf("\n");
   return 0;
 }
