@@ -1,0 +1,46 @@
+--- maze.c	2024-11-15 15:48:02.732573335 +0300
++++ maze3.c	2024-11-15 16:02:56.302354165 +0300
+@@ -5,18 +5,26 @@
+ int max = 13;
+ int may = 13;
+ 
+-void out_maze(int maze[][max], int max, int may) {
++void out_maze(int maze[][max], int max, int may, char pass, char wall) {
+   for (int i = 0; i < may; ++i) {
+     for (int j = 0; j < max; ++j) {
+-      printf("%c", ((maze[i][j] == 0) ? '#' : '.'));
++      printf("%c", ((maze[i][j] == 0) ? wall : pass));
+   	}
+   	printf("\n");
+   }
+ }
+ 
+-int main(/*int argc, char** argv*/) {
++int main(int argc, char** argv) {
++  if (argc < 4) {
++    printf("Usage: %s [random seed] [pass][wall] [maze_size]\n", argv[0]);
++    return 0;
++  }
++  int gen_seed = atoi(argv[1]);
++  char pass = argv[2][0], wall = argv[2][1];
++  max = atoi(argv[3]);
++  may = max;
+   int maze[may][max]/* = {'#'}*/;
+-  srand(time(NULL));
++  srand(gen_seed);
+   for (int i = 0; i < may; ++i) {
+     for (int j = 0; j < max; ++j) {
+       if (i % 2 == 1 && j % 2 == 1)
+@@ -63,10 +71,10 @@
+     if (y >= may)
+       break;
+   }
+-  out_maze(maze, max, may);
++  out_maze(maze, max, may, pass, wall);
+   /*for (int i = 0; i < may; ++i) {
+     for (int j = 0; j < max; ++j) {
+-    
++      
+   	}
+   }*/
+   return 0;

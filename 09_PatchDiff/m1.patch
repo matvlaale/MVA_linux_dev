@@ -1,0 +1,26 @@
+--- maze.c	2024-11-15 15:48:02.732573335 +0300
++++ maze1.c	2024-11-15 15:48:01.892580018 +0300
+@@ -14,7 +14,13 @@
+   }
+ }
+ 
+-int main(/*int argc, char** argv*/) {
++int main(int argc, char** argv) {
++  if (argc < 2) {
++    printf("Usage: %s [maze_size]\n", argv[0]);
++    return 0;
++  }
++  max = atoi(argv[1]);
++  may = max;
+   int maze[may][max]/* = {'#'}*/;
+   srand(time(NULL));
+   for (int i = 0; i < may; ++i) {
+@@ -66,7 +72,7 @@
+   out_maze(maze, max, may);
+   /*for (int i = 0; i < may; ++i) {
+     for (int j = 0; j < max; ++j) {
+-    
++      
+   	}
+   }*/
+   return 0;
