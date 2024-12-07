@@ -8,7 +8,7 @@
 
 int run_game(int argc, char* argv[]) {
   setlocale(LC_ALL, "");
-  bindtextdomain("guess", "./po");
+  bindtextdomain("guess", "/usr/local/share/locale/");
   textdomain("guess");
 
   int use_roman = 0;
